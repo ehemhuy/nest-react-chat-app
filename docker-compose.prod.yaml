@@ -1,0 +1,54 @@
+version: "3.9"
+networks:
+    esnetwork:
+        driver: bridge
+services:
+#    client-app:
+#        build:
+#            context: ./client-app
+#            dockerfile: Dockerfile
+#        ports:
+#            - "3000:80"
+#        networks:
+#            - esnetwork
+#    server-app:
+#        build:
+#            context: ./server-app
+#            dockerfile: Dockerfile
+#        ports:
+#            - "5000:5000"
+#        depends_on:
+#            - redis  
+#            - mongo
+#        networks:
+#            - esnetwork
+#        links:
+#            - redis
+#        env_file:
+#            - ./server-app/.env.local
+    redis:
+        image: "redis"
+        ports:
+            - "6379:6379"
+        networks:
+            - esnetwork
+    mongo:
+        image: "mongo"
+        ports:
+            - "27017:27017"
+        volumes:
+            - "mongodb:/data/db"
+        networks:
+            - esnetwork
+#    elasticsearch:
+#        image: "elasticsearch:8.5.2"
+#        ports:
+#            - "9200:9200"
+#        volumes:
+#            - "esdata:/usr/share/elasticsearch/data"
+#        restart: always
+
+volumes:   
+    mongodb:  
+#    esdata:   
+        
