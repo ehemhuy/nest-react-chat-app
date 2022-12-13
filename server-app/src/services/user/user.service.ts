@@ -1,17 +1,14 @@
-import { User } from './../entities/user/user.entity';
-import { RegisterDTO } from './../entities/user/dto/registerDto';
-import { LoginDTO } from './../entities/user/dto/loginDto';
-import { MongoDBService } from './../database/mongodb.service';
-import { USER_COLLECTION } from './../constants/collectionName';
-import { Inject, Injectable } from '@nestjs/common';
+import { RegisterDTO } from './../../entities/user/dto/registerDto';
+import { Injectable } from '@nestjs/common';
+import { USER_COLLECTION } from './../../constants/collectionName';
+import { MongoDBService } from './../../database/mongodb.service';
+import { User } from './../../entities/user/user.entity';
 
 @Injectable()
 export class UserService {
-    private readonly _mongoDBService: MongoDBService
     constructor(
-        mongoDBService: MongoDBService
+        private readonly _mongoDBService: MongoDBService
     ) {
-        this._mongoDBService = mongoDBService
     }
 
     /**
@@ -19,12 +16,6 @@ export class UserService {
     */
     async getUsers(): Promise<User[]> {
         return await this._mongoDBService.getAllAsync(USER_COLLECTION, {})
-    }
-
-    /**
-     * 
-     */
-    async login(loginDto: LoginDTO): Promise<void> {
     }
 
     /**

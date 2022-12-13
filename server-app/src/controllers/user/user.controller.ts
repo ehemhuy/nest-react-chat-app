@@ -1,10 +1,8 @@
-import { User } from './../entities/user/user.entity';
-import { UserService } from './../services/user.service';
-import { BadRequestException, Body, Controller, Post, Req } from '@nestjs/common';
-import { LoginDTO } from 'src/entities/user/dto/loginDto';
-import { RegisterDTO } from 'src/entities/user/dto/registerDto';
+import { RegisterDTO } from './../../entities/user/dto/registerDto';
+import { UserService } from './../../services/user/user.service';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 
-@Controller('users')
+@Controller('user')
 export class UserController {
     constructor(private readonly userService: UserService,
     ) { }
@@ -14,16 +12,6 @@ export class UserController {
         try {
             const res = await this.userService.getUsers();
             return res;
-        } catch (error) {
-            return new BadRequestException()
-        }
-    }
-
-    @Post('/login')
-    async login(@Body() loginDto: LoginDTO): Promise<any> {
-        try {
-            const data = await this.userService.login(loginDto);
-            return data;
         } catch (error) {
             return new BadRequestException()
         }

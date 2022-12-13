@@ -3,11 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserController } from './controllers/user.controller';
 import { MongoDbModule } from './database/mongodb.module';
 import { MongoDBService } from './database/mongodb.service';
 import { EventsModule } from './events/events.module';
-import { UserService } from './services/user.service';
+import { AuthModule } from './services/auth/auth.module';
+import { UserService } from './services/user/user.service';
+import { UserModule } from './services/user/user.module';
+import { AuthController } from './controllers/auth/auth.controller';
+import { UserController } from './controllers/user/user.controller';
 
 @Module({
   imports: [
@@ -23,7 +26,10 @@ import { UserService } from './services/user.service';
         }
       })
     }),
-    EventsModule],
+    EventsModule,
+    AuthModule,
+    // UserModule
+  ],
   controllers: [AppController, UserController],
   providers: [AppService, UserService, MongoDBService],
 })
