@@ -3,19 +3,15 @@ import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongoDbModule } from './database/mongodb.module';
-import { MongoDBService } from './database/mongodb.service';
+import { MongoDbConnectionModule } from './database/dbConnection.module';
 import { EventsModule } from './events/events.module';
 import { AuthModule } from './services/auth/auth.module';
-import { UserService } from './services/user/user.service';
 import { UserModule } from './services/user/user.module';
-import { AuthController } from './controllers/auth/auth.controller';
-import { UserController } from './controllers/user/user.controller';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongoDbModule,
+    MongoDbConnectionModule,
     CacheModule.register({
       // @ts-ignore
       store: async () => await redisStore({
@@ -28,9 +24,9 @@ import { UserController } from './controllers/user/user.controller';
     }),
     EventsModule,
     AuthModule,
-    // UserModule
+    UserModule
   ],
-  controllers: [AppController, UserController],
-  providers: [AppService, UserService, MongoDBService],
+  controllers: [AppController,],
+  providers: [AppService,],
 })
 export class AppModule { }

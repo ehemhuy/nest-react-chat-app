@@ -1,8 +1,8 @@
 import { RegisterDTO } from './../../entities/user/dto/registerDto';
 import { Injectable } from '@nestjs/common';
 import { USER_COLLECTION } from './../../constants/collectionName';
-import { MongoDBService } from './../../database/mongodb.service';
 import { User } from './../../entities/user/user.entity';
+import { MongoDBService } from '../mongodb/mongodb.service';
 
 @Injectable()
 export class UserService {

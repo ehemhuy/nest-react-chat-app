@@ -12,11 +12,10 @@ import { MongoClient, Db, } from 'mongodb';
                 throw e;
             }
         }
-    }
-    ],
+    }],
     exports: [
         'MONGODB_CONNECTION'
     ]
 })
 
-export class MongoDbModule { }
+export class MongoDbConnectionModule { }
