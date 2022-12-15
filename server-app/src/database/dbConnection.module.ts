@@ -1,9 +1,10 @@
+import { MONGODB_CONNECTION } from './../constants/constants';
 import { Module } from "@nestjs/common";
 import { MongoClient, Db, } from 'mongodb';
 
 @Module({
     providers: [{
-        provide: 'MONGODB_CONNECTION',
+        provide: MONGODB_CONNECTION,
         useFactory: async (): Promise<Db> => {
             try {
                 const client = await MongoClient.connect(process.env.MONGODB_CONNECTION_STRING,);
@@ -14,7 +15,7 @@ import { MongoClient, Db, } from 'mongodb';
         }
     }],
     exports: [
-        'MONGODB_CONNECTION'
+        MONGODB_CONNECTION
     ]
 })
 

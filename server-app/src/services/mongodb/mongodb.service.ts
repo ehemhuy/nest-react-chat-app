@@ -1,3 +1,4 @@
+import { MONGODB_CONNECTION } from './../../constants/constants';
 import { Inject, Injectable } from '@nestjs/common';
 import { CountDocumentsOptions, Db, Filter, FindOptions, UpdateFilter, UpdateOptions, DeleteOptions, DeleteResult } from 'mongodb';
 
@@ -5,7 +6,7 @@ import { CountDocumentsOptions, Db, Filter, FindOptions, UpdateFilter, UpdateOpt
 export class MongoDBService {
     private readonly _database: Db;
     constructor(
-        @Inject('MONGODB_CONNECTION') private readonly database: Db
+        @Inject(MONGODB_CONNECTION) private readonly database: Db
     ) {
         this._database = database;
     }
