@@ -1,6 +1,7 @@
+import { Body, Controller, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { RegisterDTO } from './../../entities/user/dto/registerDto';
 import { UserService } from './../../services/user/user.service';
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
@@ -8,24 +9,30 @@ export class UserController {
     ) { }
 
     @Post('/filter')
-    async getUsers(): Promise<any> {
+    async getUsers(@Res() response: Response): Promise<any> {
         try {
-            const res = await this.userService.getUsers();
-            return res;
+            const users = await this.userService.getUsers();
+            return response.send(users).end;
         } catch (error) {
-            return new BadRequestException()
+            return response.status(200).end();
         }
     }
 
     @Post('/register')
-    async register(@Body() registerDto: RegisterDTO): Promise<any> {
+    async register(@Body() registerDto: RegisterDTO, @Res() response: Response): Promise<any> {
         try {
-            if (!registerDto.email || !registerDto.username || !registerDto.password) return new BadRequestException("Error input")
-            const res = await this.userService.register(registerDto);
-            if (!res) return new BadRequestException("User exist")
-            return res;
+            if (!registerDto.email || !registerDto.username || !registerDto.password) return response.status(400).end()
+
+            const serviceResponse = await this.userService.register(registerDto);
+            if (!serviceResponse.isSuccess) return response.status(400).end()
+
+            response.cookie('Authorization', serviceResponse.token, {
+                sameSite: 'strict',
+                httpOnly: true,
+            });
+            return response.status(200).end();
         } catch (error) {
-            return new BadRequestException()
+            return response.status(400).end();
         }
     }
 }

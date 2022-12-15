@@ -1,10 +1,11 @@
-import { CacheModule, Module } from '@nestjs/common';
+import { CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongoDbConnectionModule } from './database/dbConnection.module';
 import { EventsModule } from './events/events.module';
+import { JWTMiddleware } from './middlewares/jwt.middleware';
 import { AuthModule } from './services/auth/auth.module';
 import { UserModule } from './services/user/user.module';
 
@@ -29,4 +30,9 @@ import { UserModule } from './services/user/user.module';
   controllers: [AppController,],
   providers: [AppService,],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(JWTMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
