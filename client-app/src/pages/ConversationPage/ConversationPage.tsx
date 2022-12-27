@@ -1,4 +1,6 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import baseAxios from '../../api/baseAxios';
 import ConversationItem from '../../components/Input/ConversationItem/ConversationItem';
 import { ConversationType } from '../../types/conversation';
 
@@ -33,6 +35,12 @@ const conversationsFake: ConversationType[] = [
 ];
 
 function ConversationPage() {
+	useEffect(() => {
+		baseAxios.post('http://localhost:5000/conversation/filter', {
+			userID: '',
+		});
+	}, []);
+
 	return (
 		<div className='conversation-page flex flex-col'>
 			{conversationsFake.map((c) => (

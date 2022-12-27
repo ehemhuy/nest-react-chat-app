@@ -1,10 +1,10 @@
+import { generateJwtToken } from './../../utils/jwt.util';
+import { ServiceResponse } from './../../types/serviceResponse';
+import { USER_COLLECTION } from './../../constants/collectionName';
 import { User } from './../../entities/user/user.entity';
 import { MongoDBService } from './../mongodb/mongodb.service';
 import { LoginDTO } from './../../entities/user/dto/loginDto';
 import { Injectable } from '@nestjs/common';
-import { USER_COLLECTION } from 'src/constants/collectionName';
-import { ServiceResponse } from 'src/types/serviceResponse';
-import { generateJwtToken } from 'src/utils/jwt.util';
 
 @Injectable()
 export class AuthService {

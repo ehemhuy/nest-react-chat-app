@@ -1,3 +1,4 @@
+import { ConversationModule } from './services/conversation/conversation.module';
 import { CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
@@ -25,7 +26,8 @@ import { UserModule } from './services/user/user.module';
     }),
     EventsModule,
     AuthModule,
-    UserModule
+    UserModule,
+    ConversationModule
   ],
   controllers: [AppController,],
   providers: [AppService,],
