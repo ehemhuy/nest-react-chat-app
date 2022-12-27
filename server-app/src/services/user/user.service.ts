@@ -43,9 +43,6 @@ export class UserService {
         const isInserted = await this._mongoDBService.insertOneAsync(USER_COLLECTION, user)
         if (!isInserted) return response;
 
-        const token = generateJwtToken(user.UserID);
-        response.token = token
-        response.isSuccess = true
         return response
     }
 }

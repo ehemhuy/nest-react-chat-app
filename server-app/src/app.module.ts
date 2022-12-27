@@ -33,6 +33,11 @@ import { UserModule } from './services/user/user.module';
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(JWTMiddleware).forRoutes({ path: '*', method: RequestMethod.ALL });
+      .apply(JWTMiddleware)
+      .exclude(
+        { path: 'user/register', method: RequestMethod.POST },
+        { path: 'auth/login', method: RequestMethod.POST },
+      )
+      .forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }

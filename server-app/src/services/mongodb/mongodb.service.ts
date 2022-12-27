@@ -16,8 +16,8 @@ export class MongoDBService {
      * @param collectionName 
      * @returns 
      */
-    async getOneAsync(collectionName: string): Promise<any> {
-        const document = await this._database.collection(collectionName).findOne();
+    async getOneAsync<T>(collectionName: string, filter?: Filter<T>): Promise<T> {
+        const document = await this._database.collection<T>(collectionName).findOne<T>(filter);
         return document;
     }
 

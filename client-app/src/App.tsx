@@ -4,13 +4,11 @@ import { io, Socket } from 'socket.io-client';
 import './App.css';
 import Input from './components/Input/Input';
 import ConversationPage from './pages/ConversationPage/ConversationPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 
 function App() {
 	const socketClientRef = useRef<Socket>();
-	const [inputVal, setInputVal] = useState<string>('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [username, setUsername] = useState('');
 	useEffect(() => {
 		fetch('http://localhost:5000/')
 			.then((d) => d.json())
@@ -33,57 +31,19 @@ function App() {
 		});
 	}
 
-	const handleSubmit = () => {
-		var myHeaders = new Headers();
-		myHeaders.append('Content-Type', 'application/json');
-
-		var raw = JSON.stringify({
-			username: username,
-			password: password,
-			email: email,
-		});
-
-		var requestOptions: RequestInit = {
-			method: 'POST',
-			headers: myHeaders,
-			body: raw,
-			redirect: 'follow',
-			credentials: 'include',
-		};
-
-		fetch('http://localhost:5000/user/register', requestOptions)
-			.then((response) => response.text())
-			.then((result) => console.log(result))
-			.catch((error) => console.log('error', error));
-	};
-
 	return (
 		<div className='chat-app'>
 			<BrowserRouter>
 				<Routes>
 					<Route element={<ConversationPage />} path='/conversation' />
 				</Routes>
+				<Routes>
+					<Route element={<LoginPage />} path='/login' />
+				</Routes>
+				<Routes>
+					<Route element={<RegisterPage />} path='/register' />
+				</Routes>
 			</BrowserRouter>
-
-			<Input
-				onChange={(e) => {
-					setUsername(e.target.value);
-				}}
-				value={username}
-			/>
-			<Input
-				onChange={(e) => {
-					setEmail(e.target.value);
-				}}
-				value={email}
-			/>
-			<Input
-				onChange={(e) => {
-					setPassword(e.target.value);
-				}}
-				value={password}
-			/>
-			<button onClick={handleSubmit}>Submit</button>
 		</div>
 	);
 }
